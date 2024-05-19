@@ -1,0 +1,23 @@
+{
+    "tokenizers": {
+        "expert1": "VAGOsolutions/2b_base_en_sft_dpo",
+        "expert2": "microsoft/Phi-3-mini-4k-instruct",
+        "expert3": "cognitivecomputations/Dolphin-2.9.1-Phi-3-Kensho-4.5B",
+        "expert4": "VAGOsolutions/german_cp_dpo_2b"
+    },
+    "models": {
+        "expert1": "VAGOsolutions/2b_base_en_sft_dpo",
+        "expert2": "microsoft/Phi-3-mini-4k-instruct",
+        "expert3": "cognitivecomputations/Dolphin-2.9.1-Phi-3-Kensho-4.5B",
+        "expert4": "VAGOsolutions/german_cp_dpo_2b"
+    },
+
+    "class_indices": {
+        "LABEL_0": 0,
+        "LABEL_1": 1,
+        "LABEL_2": 2,
+        "LABEL_3": 3
+    },
+    "router": "results/finetunned-qwen",
+    "model_type": "kraken"
+}
