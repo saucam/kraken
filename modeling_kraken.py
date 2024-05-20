@@ -1,6 +1,7 @@
 import torch
 from transformers import PreTrainedModel, AutoTokenizer, AutoModelForCausalLM, AutoModelForSequenceClassification, TextClassificationPipeline
 from configuration_kraken import KrakenConfig
+import tokenizer_template_switch
 
 class KrakenForCausalLM(PreTrainedModel):
     config_class = KrakenConfig
@@ -29,7 +30,14 @@ class KrakenForCausalLM(PreTrainedModel):
 
     def generate(self, input_ids, **generate_kwargs):
         # Tokenize the input_ids
-        text = self.tokenizer.batch_decode(input_ids, skip_special_tokens=True)[0]  
+        text = self.tokenizer.batch_decode(input_ids, skip_special_tokens=False)[0]
+
+        msgs = tokenizer_template_switch.recover_chat_messages(text, self.tokenizer)
+
+        # Check if the last element has the role 'assistant'
+        if msgs and msgs[-1]['role'] == 'assistant':
+            # Delete the last element
+            msgs.pop()  
 
         # Determine the model key using the existing routing logic
         model_key = self.determine_model(text)
@@ -37,8 +45,10 @@ class KrakenForCausalLM(PreTrainedModel):
         # Retrieve the model from the dictionary
         model = self.models[model_key]
 
+        mod_txt = self.tokenizers[model_key].apply_chat_template(msgs, tokenize=False, add_generation_prompt=True)
+
         # Tokenize accordingly to the best model
-        tok = self.tokenizers[model_key](text, return_tensors="pt").input_ids  
+        tok = self.tokenizers[model_key](mod_txt, return_tensors="pt").input_ids  
         
         # Generate text using the retrieved model
         return model.generate(tok, **generate_kwargs)
