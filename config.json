@@ -34,7 +34,6 @@
       "expert5": "VAGOsolutions/Llama-3-SauerkrautLM-8b-Instruct"
     }
   },
-  "model_type": "kraken",
   "torch_dtype": "float32",
   "transformers_version": "4.41.0"
 }
