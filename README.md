@@ -4,7 +4,7 @@
 
 ## Overview
 
-The Kraken Architecture is a sophisticated machine learning framework designed for dynamic text generation tasks. It utilizes the Hugging Face transformers library to orchestrate multiple causal language models (CLMs) and intelligently route input through different models based on the context and content of the input text. The architecture is powered by a custom configuration class (CoEConfig) that facilitates the integration and management of various components such as tokenizers, models, and routing mechanisms.
+The Kraken Architecture is a sophisticated machine learning framework designed for dynamic text generation tasks. It utilizes the Hugging Face transformers library to orchestrate multiple causal language models (CLMs) and intelligently route input through different models based on the context and content of the input text. The architecture is powered by a custom configuration class (KrakenConfig) that facilitates the integration and management of various components such as tokenizers, models, and routing mechanisms.
 
 ## Features
 
@@ -17,3 +17,7 @@ Requirements
 Python 3.11+
 transformers 4.40+
 torch 2.2+
+
+## Cite As
+
+Fernando Fernandes Neto, David Golchinfar, Lucas Atkins, Eric Hartford - Kraken: An OpenSource Collection of Experts Model, 2024
