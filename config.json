@@ -1,23 +1,40 @@
 {
-    "tokenizers": {
-        "expert1": "VAGOsolutions/2b_base_en_sft_dpo",
-        "expert2": "microsoft/Phi-3-mini-4k-instruct",
-        "expert3": "cognitivecomputations/Dolphin-2.9.1-Phi-3-Kensho-4.5B",
-        "expert4": "VAGOsolutions/german_cp_dpo_2b"
-    },
-    "models": {
-        "expert1": "VAGOsolutions/2b_base_en_sft_dpo",
-        "expert2": "microsoft/Phi-3-mini-4k-instruct",
-        "expert3": "cognitivecomputations/Dolphin-2.9.1-Phi-3-Kensho-4.5B",
-        "expert4": "VAGOsolutions/german_cp_dpo_2b"
-    },
-
+  "architectures": [
+    "KrakenForCausalLM"
+  ],
+  "config_dict": {
     "class_indices": {
-        "LABEL_0": 0,
-        "LABEL_1": 1,
-        "LABEL_2": 2,
-        "LABEL_3": 3
+      "LABEL_0": 0,
+      "LABEL_1": 1,
+      "LABEL_2": 2,
+      "LABEL_3": 3,
+      "LABEL_4": 4
     },
-    "router": "results/finetunned-qwen",
-    "model_type": "kraken"
+    "model_type": "kraken",
+    "models": {
+      "expert1": "cognitivecomputations/dolphin-2.9.1-yi-1.5-34b",
+      "expert2": "gorilla-llm/gorilla-openfunctions-v2",
+      "expert3": "ise-uiuc/Magicoder-S-DS-6.7B",
+      "expert4": "defog/llama-3-sqlcoder-8b",
+      "expert5": "VAGOsolutions/Llama-3-SauerkrautLM-8b-Instruct"
+    },
+    "quantization": {
+      "expert1": "4bit",
+      "expert2": null,
+      "expert3": null,
+      "expert4": null,
+      "expert5": null
+    },
+    "router": "./kraken_router",
+    "tokenizers": {
+      "expert1": "cognitivecomputations/dolphin-2.9.1-yi-1.5-34b",
+      "expert2": "gorilla-llm/gorilla-openfunctions-v2",
+      "expert3": "ise-uiuc/Magicoder-S-DS-6.7B",
+      "expert4": "defog/llama-3-sqlcoder-8b",
+      "expert5": "VAGOsolutions/Llama-3-SauerkrautLM-8b-Instruct"
+    }
+  },
+  "model_type": "kraken",
+  "torch_dtype": "float32",
+  "transformers_version": "4.41.0"
 }
