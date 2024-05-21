@@ -12,11 +12,23 @@ Dynamic Model Routing: Uses a sequence classification model to route inputs to t
 Multiple Language Models: Supports integration of various pre-trained causal language models, allowing for flexible, context-appropriate responses.
 Customizable Templates: Includes support for input formatting using predefined templates, enhancing the model's adaptability to different conversational contexts.
 Extensible Configuration: Leverages a custom configuration setup that can be easily extended and adapted for various use cases involving causal language modeling.
-Requirements
+
+## Requirements
 
 Python 3.11+
 transformers 4.40+
 torch 2.2+
+
+## How to Use
+
+(Optional) 0. Run the jupyter notebook kraken_train_router.ipynb to train a router that will be imported later as a our router on the Kraken CoE Architecture
+
+
+1. Run the kraken_lm_save.ipynb that will load a router (could be the one you have trained in step 0.) and sets up a model following the Kraken CoE Architecture, according to the config.json.
+This will generate a subfolder ./kraken_model
+
+
+3. Run kraken_lm_load.ipynb to understand how to load the newly created model
 
 ## Cite As
 
