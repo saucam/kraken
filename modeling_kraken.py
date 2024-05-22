@@ -20,13 +20,13 @@ class KrakenForCausalLM(PreTrainedModel):
         for key, name in models_dict.items():
             quantization = quantization_dict.get(key)
             if quantization == "8bit":
-                models[key] = AutoModelForCausalLM.from_pretrained(name, trust_remote_code=True, device_map="auto", load_in_8bit=True)
+                models[key] = AutoModelForCausalLM.from_pretrained(name, trust_remote_code=True, device_map="auto", load_in_8bit=True, torch_dtype="auto")
             elif quantization == "4bit":
-                models[key] = AutoModelForCausalLM.from_pretrained(name, trust_remote_code=True, device_map="auto", load_in_4bit=True)
+                models[key] = AutoModelForCausalLM.from_pretrained(name, trust_remote_code=True, device_map="auto", load_in_4bit=True, torch_dtype="auto")
             elif quantization == "awq":
                 models[key] = self.load_awq_model(name)
             else:
-                models[key] = AutoModelForCausalLM.from_pretrained(name, trust_remote_code=True, device_map="auto")
+                models[key] = AutoModelForCausalLM.from_pretrained(name, trust_remote_code=True, device_map="auto", torch_dtype="auto")
         return models
 
     def load_awq_model(self, name):
@@ -68,11 +68,15 @@ class KrakenForCausalLM(PreTrainedModel):
 
         mod_txt = self.tokenizers[model_key].apply_chat_template(msgs, tokenize=False, add_generation_prompt=True)
         current_device = input_ids.device if isinstance(input_ids, torch.Tensor) else 'cpu'
-        # Tokenize accordingly to the best model
-        tok = self.tokenizers[model_key](mod_txt, return_tensors="pt").input_ids.to(current_device)  
         
+        # Tokenize accordingly to the best model
+
+        tok = self.tokenizers[model_key](mod_txt, return_tensors="pt")
+        tok_input_ids = tok.input_ids.to(current_device)  
+        tok_attention_mask = tok.attention_mask.to(current_device)
+
         # Generate text using the retrieved model
-        return model.generate(tok, **generate_kwargs)
+        return model.generate(tok_input_ids, attention_mask=tok_attention_mask, **generate_kwargs)
     
 
       
